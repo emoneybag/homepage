@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { useTheme } from "./ThemeProvider";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useTheme } from "./ThemeProvider";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -13,6 +14,7 @@ const navLinks = [
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const pathname = usePathname();
 
   return (
     <header className="absolute left-0 top-0 z-50 w-full">
@@ -30,23 +32,27 @@ export default function Navbar() {
 
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-8 md:flex">
-          {navLinks.map((link, index) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className={`relative text-sm font-medium transition-colors ${
-                index === 0
-                  ? "text-slate-900 dark:text-white"
-                  : "text-slate-500 hover:text-slate-900 dark:text-white/65 dark:hover:text-white"
-              }`}
-            >
-              {link.name}
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
 
-              {index === 0 && (
-                <span className="absolute -bottom-2 left-0 h-0.5 w-full rounded-full bg-blue-500" />
-              )}
-            </a>
-          ))}
+            return (
+              <Link
+                key={link.name}
+                href={link.href}
+                className={`relative text-sm font-medium transition-colors ${
+                  isActive
+                    ? "text-slate-900 dark:text-white"
+                    : "text-slate-500 hover:text-slate-900 dark:text-white/65 dark:hover:text-white"
+                }`}
+              >
+                {link.name}
+
+                {isActive && (
+                  <span className="absolute -bottom-2 left-0 h-0.5 w-full rounded-full bg-blue-500" />
+                )}
+              </Link>
+            );
+          })}
 
           {/* Theme Toggle */}
           <button
@@ -61,12 +67,12 @@ export default function Navbar() {
           </button>
 
           {/* Contact CTA */}
-          <a
+          <Link
             href="/contact"
             className="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition-all hover:-translate-y-0.5 hover:bg-blue-500 hover:shadow-blue-500/30"
           >
             Let&apos;s Talk
-          </a>
+          </Link>
         </div>
 
         {/* Mobile Controls */}
@@ -123,24 +129,32 @@ export default function Navbar() {
         }`}
       >
         <div className="mx-auto flex max-w-7xl flex-col px-6 py-5">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              onClick={() => setMenuOpen(false)}
-              className="border-b border-slate-200 py-4 text-sm font-medium text-slate-600 transition-colors hover:text-slate-900 dark:border-white/5 dark:text-white/75 dark:hover:text-white"
-            >
-              {link.name}
-            </a>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
 
-          <a
+            return (
+              <Link
+                key={link.name}
+                href={link.href}
+                onClick={() => setMenuOpen(false)}
+                className={`border-b border-slate-200 py-4 text-sm font-medium transition-colors dark:border-white/5 ${
+                  isActive
+                    ? "text-blue-600 dark:text-blue-400"
+                    : "text-slate-600 hover:text-slate-900 dark:text-white/75 dark:hover:text-white"
+                }`}
+              >
+                {link.name}
+              </Link>
+            );
+          })}
+
+          <Link
             href="/contact"
             onClick={() => setMenuOpen(false)}
             className="mt-5 rounded-lg bg-blue-600 px-5 py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-blue-500"
           >
             Let&apos;s Talk
-          </a>
+          </Link>
         </div>
       </div>
     </header>
