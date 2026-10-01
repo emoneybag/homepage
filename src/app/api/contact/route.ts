@@ -1,5 +1,7 @@
+import { createElement } from "react";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import ContactFormEmail from "@/emails/contact-form-email";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -16,23 +18,19 @@ export async function POST(request: Request) {
 
     const name = String(body.name ?? "").trim();
     const email = String(body.email ?? "").trim();
-    const subject = String(body.subject ?? "").trim();
+    const emailSubject = String(body.subject ?? "").trim();
     const message = String(body.message ?? "").trim();
 
-    if (!name || !email || !subject || !message) {
+    if (!name || !email || !emailSubject || !message) {
       return NextResponse.json(
-        {
-          error: "Please complete all required fields.",
-        },
+        { error: "Please complete all required fields." },
         { status: 400 }
       );
     }
 
     if (!isValidEmail(email)) {
       return NextResponse.json(
-        {
-          error: "Please enter a valid email address.",
-        },
+        { error: "Please enter a valid email address." },
         { status: 400 }
       );
     }
@@ -41,26 +39,25 @@ export async function POST(request: Request) {
       console.error("RESEND_API_KEY is not configured.");
 
       return NextResponse.json(
-        {
-          error: "Email service is not configured.",
-        },
+        { error: "Email service is not configured." },
         { status: 500 }
       );
     }
+
+    const emailSubjectLine = "S&R Website Contact: " + emailSubject;
 
     const { error } = await resend.emails.send({
       from: FROM_EMAIL,
       to: [TO_EMAIL],
       replyTo: email,
-      subject: `S&R Website Contact: ${subject}`,
-      text: `New contact form submission
-
-Name: ${name}
-Email: ${email}
-Subject: ${subject}
-
-Message:
-${message}`,
+      subject: emailSubjectLine,
+      // createElement instead of JSX so this can stay a .ts file
+      react: createElement(ContactFormEmail, {
+        name,
+        email,
+        subject: emailSubject,
+        message,
+      }),
     });
 
     if (error) {
@@ -68,22 +65,19 @@ ${message}`,
 
       return NextResponse.json(
         {
-          error: "Unable to send your message right now. Please try again later.",
+          error:
+            "Unable to send your message right now. Please try again later.",
         },
         { status: 500 }
       );
     }
 
-    return NextResponse.json({
-      success: true,
-    });
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Contact form error:", error);
 
     return NextResponse.json(
-      {
-        error: "Something went wrong while sending your message.",
-      },
+      { error: "Something went wrong while sending your message." },
       { status: 500 }
     );
   }
