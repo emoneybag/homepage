@@ -181,7 +181,7 @@ export default function ContactPage() {
           {/* Contact Form */}
           <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-900/5 dark:border-white/10 dark:bg-white/3 dark:shadow-black/20 sm:p-10">
             {submitted ? (
-              <div className="flex min-h-[500px] flex-col items-center justify-center text-center">
+              <div className="flex min-h-125 flex-col items-center justify-center text-center">
                 <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-500/10 text-3xl text-green-600 dark:text-green-400">
                   ✓
                 </div>
