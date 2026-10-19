@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
+import { Unbounded } from "next/font/google";
 import "./globals.css";
+
+const display = Unbounded({ subsets: ["latin"], variable: "--font-display" });
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 export const metadata: Metadata = {
@@ -14,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={display.variable}>
       <body>
         <ThemeProvider>{children}</ThemeProvider>
       </body>
