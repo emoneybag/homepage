@@ -137,7 +137,7 @@ export default function Home() {
       <section className="bg-surface px-6 py-16 text-fg lg:px-8 lg:py-24">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-5 md:grid-cols-2">
-            <div className="reveal aspect-[4/3] overflow-hidden rounded-2xl bg-surface-2 p-6">
+            <div className="reveal aspect-4/3 overflow-hidden rounded-2xl bg-surface-2 p-6">
               <div className="h-full rounded-xl border border-fg/10 bg-page p-5">
                 <div className="flex justify-between">
                   <div className="h-2 w-16 rounded bg-fg/20" />
@@ -149,7 +149,7 @@ export default function Home() {
                 <div className="mt-2 h-2 w-2/3 rounded bg-fg/10" />
               </div>
             </div>
-            <div style={{ transitionDelay: "150ms" }} className="reveal flex aspect-[4/3] items-center justify-center rounded-2xl bg-gradient-to-br from-[#ef5b4a] via-[#7a2bd6] to-[#1b1464]">
+            <div style={{ transitionDelay: "150ms" }} className="reveal flex aspect-4/3 items-center justify-center rounded-2xl bg-linear-to-br from-[#ef5b4a] via-[#7a2bd6] to-[#1b1464]">
               <div className="text-center text-white">
                 <div className="font-display text-4xl font-light tracking-widest">S&amp;R</div>
                 <p className="mt-3 text-sm text-white/80">More projects coming soon</p>

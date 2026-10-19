@@ -71,7 +71,7 @@ export default function ContactPage() {
 
         <h1
           aria-label="Let's build something great."
-          className="reveal-text font-display mx-auto mt-6 max-w-5xl text-[clamp(2rem,5.5vw,4.5rem)] font-light uppercase leading-[1.1] tracking-[0.1em]"
+          className="reveal-text font-display mx-auto mt-6 max-w-5xl text-[clamp(2rem,5.5vw,4.5rem)] font-light uppercase leading-[1.1] tracking-widest"
         >
           <BlurText text="Let's build something " />
           <BlurText text="great." offset={22} className="text-accent" />
@@ -92,7 +92,7 @@ export default function ContactPage() {
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.8fr_1.2fr]">
           {/* Contact Information */}
           <div className="reveal">
-            <div className="rounded-3xl border border-fg/10 bg-fg/[0.04] p-8">
+            <div className="rounded-3xl border border-fg/10 bg-fg/4 p-8">
               <h2 className="text-2xl font-medium">Get in touch</h2>
               <p className="mt-4 leading-7 text-muted">
                 Whether you&apos;re starting from scratch or looking to improve

@@ -42,7 +42,7 @@ export default function PortfolioPage() {
 
         <h1
           aria-label="Projects built with purpose."
-          className="reveal-text font-display mx-auto mt-6 max-w-5xl text-[clamp(2rem,5.5vw,4.5rem)] font-light uppercase leading-[1.1] tracking-[0.1em]"
+          className="reveal-text font-display mx-auto mt-6 max-w-5xl text-[clamp(2rem,5.5vw,4.5rem)] font-light uppercase leading-[1.1] tracking-widest"
         >
           <BlurText text="Projects built with " />
           <BlurText text="purpose." offset={20} className="text-accent" />
@@ -68,7 +68,7 @@ export default function PortfolioPage() {
           {projects.map((project) => (
             <article
               key={project.title}
-              className="reveal overflow-hidden rounded-3xl border border-fg/10 bg-fg/[0.04]"
+              className="reveal overflow-hidden rounded-3xl border border-fg/10 bg-fg/4"
             >
               <div className="grid lg:grid-cols-2">
                 {/* Preview */}

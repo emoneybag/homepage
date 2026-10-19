@@ -79,9 +79,9 @@ export default function Navbar() {
             onClick={() => setMenuOpen(!menuOpen)}
             className="flex h-8 w-8 items-center justify-center"
           >
-            <div className="flex w-[18px] flex-col gap-[6px]">
+            <div className="flex w-4.5 flex-col gap-1.5">
               <span className={`h-px w-full bg-fg transition-transform ${menuOpen ? "translate-y-[3.5px] rotate-45" : ""}`} />
-              <span className={`h-px w-full bg-fg transition-transform ${menuOpen ? "-translate-y-[3.5px] -rotate-45" : ""}`} />
+              <span className={`h-px w-full bg-fg transition-transform ${menuOpen ? "translate-y-[-3.5px] -rotate-45" : ""}`} />
             </div>
           </button>
         </div>
