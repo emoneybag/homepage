@@ -1,210 +1,143 @@
 # S&R Group — Homepage
 
-The official homepage for **S&R Group**, a web development business focused on building modern, responsive, and user-friendly websites for businesses.
+The official website for **S&R Group**, a web design and development business that builds modern, fast and user-friendly websites for businesses.
 
-This repository contains the main S&R Group website, including the homepage, portfolio, and contact pages.
+The site is a small Next.js application with a homepage, a portfolio and a contact page whose form sends messages straight to our inbox.
 
-**Repository:** [github.com/emoneybag/homepage](https://github.com/emoneybag/homepage?utm_source=chatgpt.com)
+## Features
 
-## 🌐 About S&R Group
+- **Three pages:** Home (`/`), Portfolio (`/portfolio`) and Contact (`/contact`)
+- **Light and dark themes** with a toggle in the navbar. The choice is saved in the browser and defaults to the visitor's system setting
+- **Working contact form** that validates input on the server and delivers email through [Resend](https://resend.com), using a branded React Email template
+- **Scroll-triggered text animations** (blur-in reveals) that respect the "reduce motion" system setting
+- **Responsive design**, from phones to large desktops
+- **Apple-style navigation bar**: translucent, blurred and pinned to the top of the screen
 
-**S&R Group** provides custom website development for businesses looking to establish or improve their online presence.
+## Tech stack
 
-The website is designed to:
+| Area | Technology |
+| --- | --- |
+| Framework | [Next.js](https://nextjs.org) 16 (App Router) |
+| UI | React 19, [Tailwind CSS](https://tailwindcss.com) 4 |
+| Language | TypeScript 5 |
+| Email | [Resend](https://resend.com) + [React Email](https://react.email) |
+| Fonts | `next/font` (Unbounded for display headings) |
+| Linting | ESLint 9 with `eslint-config-next` |
 
-* Showcase S&R Group's web development services
-* Display completed and example projects
-* Provide information about the business
-* Make it easy for potential clients to get in contact
-* Provide a modern, responsive experience across devices
-* Support both light and dark themes
-
-## ✨ Features
-
-* 🏠 Modern homepage
-* 💼 Portfolio section
-* 📩 Contact page
-* 🌙 Dark mode
-* ☀️ Light mode
-* 📱 Responsive design
-* ⚡ Built with Next.js
-* 🎨 Tailwind CSS styling
-* 🔗 Client-side navigation
-* 🧩 Component-based architecture
-
-## 🛠️ Tech Stack
-
-* **Next.js 16.3.1**
-* **React 19.2.8**
-* **TypeScript 5**
-* **Tailwind CSS 4**
-* **ESLint 9**
-* **PostCSS**
-
-## 📁 Project Structure
-
-```text
-homepage/
-├── public/
-│   └── ...
-│
-├── src/
-│   └── ...
-│
-├── .gitignore
-├── AGENTS.md
-├── CLAUDE.md
-├── README.md
-├── eslint.config.mjs
-├── next.config.ts
-├── package.json
-├── package-lock.json
-├── postcss.config.mjs
-└── tsconfig.json
-```
-
-> The `src/` directory contains the application's source code, while `public/` contains static assets.
-
-## 🚀 Getting Started
+## Getting started
 
 ### Prerequisites
 
-Make sure you have the following installed:
-
-* [Node.js](https://nodejs.org/)
-* npm
+- [Node.js](https://nodejs.org) 20 or newer
+- npm (included with Node.js)
+- A [Resend](https://resend.com) API key, only needed if you want the contact form to send email locally
 
 ### Installation
 
-Clone the repository:
-
 ```bash
 git clone https://github.com/emoneybag/homepage.git
-```
-
-Navigate into the project:
-
-```bash
 cd homepage
-```
-
-Install dependencies:
-
-```bash
 npm install
 ```
 
-### Development Server
+### Environment variables
 
-Start the development server:
+Create a `.env.local` file in the project root:
+
+```env
+RESEND_API_KEY=your_resend_api_key
+```
+
+| Variable | Required | Description |
+| --- | --- | --- |
+| `RESEND_API_KEY` | Yes, for the contact form | API key used to send email through Resend |
+
+The sender and recipient addresses are currently set at the top of `src/app/api/contact/route.ts`. The sender must belong to a domain verified in Resend.
+
+Never commit `.env.local` or any other secrets. `.env*` files are already ignored by Git.
+
+### Run the development server
 
 ```bash
 npm run dev
 ```
 
-Then open:
+Open [http://localhost:3000](http://localhost:3000). The page reloads as you edit files.
+
+## Scripts
+
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start the development server |
+| `npm run build` | Create an optimized production build |
+| `npm run start` | Run the production build |
+| `npm run lint` | Run ESLint |
+
+Before pushing, it's worth running:
+
+```bash
+npm run lint && npx tsc --noEmit && npm run build
+```
+
+## Project structure
 
 ```text
-http://localhost:3000
+homepage/
+├── public/
+│   └── images/               Logo files
+├── src/
+│   ├── app/
+│   │   ├── api/contact/      Contact form endpoint (POST /api/contact)
+│   │   ├── contact/          Contact page
+│   │   ├── portfolio/        Portfolio page
+│   │   ├── globals.css       Theme colors, animations and global styles
+│   │   ├── layout.tsx        Root layout, fonts and metadata
+│   │   └── page.tsx          Homepage
+│   ├── components/
+│   │   ├── Navbar.tsx        Navigation bar and theme toggle
+│   │   ├── Reveal.tsx        Scroll-triggered text and block animations
+│   │   └── ThemeProvider.tsx Light/dark theme state
+│   └── emails/
+│       └── contact-form-email.tsx   Email template for contact messages
+├── AGENTS.md / CLAUDE.md     Instructions for AI coding assistants
+├── eslint.config.mjs
+├── next.config.ts
+├── package.json
+├── postcss.config.mjs
+└── tsconfig.json
 ```
 
-The development server automatically updates as you make changes to the source code.
+## Theming
 
-## 📜 Available Scripts
+Colors are defined as CSS variables in `src/app/globals.css` and exposed to Tailwind as semantic classes, so components never hard-code light or dark values.
 
-| Command         | Description                   |
-| --------------- | ----------------------------- |
-| `npm run dev`   | Starts the development server |
-| `npm run build` | Creates a production build    |
-| `npm run start` | Starts the production server  |
-| `npm run lint`  | Runs ESLint                   |
+| Class | Dark theme | Light theme |
+| --- | --- | --- |
+| `bg-page` | Black | White |
+| `bg-surface` | Dark gray | Light gray |
+| `bg-surface-2` | Lighter dark gray | White |
+| `text-fg` | Near-white | Near-black |
+| `text-muted` | Light gray | Dark gray |
+| `text-accent` | Bright amber | Deep amber |
 
-## 🌓 Theme Support
+To change the look of a theme, edit the variables in `:root` (light) and `html.dark` (dark). The theme is applied by toggling a `dark` class on the `<html>` element.
 
-The website supports both:
+## Contact form
 
-* ☀️ Light mode
-* 🌙 Dark mode
+1. The form on `/contact` posts JSON to `/api/contact`.
+2. The route validates the fields, then sends an email through Resend using the `ContactFormEmail` template.
+3. The visitor's address is set as the reply-to, so replying to the notification email answers them directly.
 
-Theme selection can be switched directly from the navigation bar.
+## Deployment
 
-## 📄 Pages
+The site can be deployed to any host that supports Next.js, such as [Vercel](https://vercel.com). Add `RESEND_API_KEY` to the host's environment variables before deploying, and make sure the sending domain is verified in Resend.
 
-### Home
+## Project status
 
-`/`
+In active development. Design, content and portfolio projects will continue to evolve.
 
-The main landing page for S&R Group, introducing the business and its web development services.
+## License
 
-### Portfolio
+Copyright © 2026 S&R Group. All rights reserved.
 
-`/portfolio`
-
-Showcases projects created by S&R Group, including example websites and applications.
-
-### Contact
-
-`/contact`
-
-Provides visitors with a way to get in touch with S&R Group regarding website development and other services.
-
-## 💼 Portfolio Projects
-
-The portfolio may include both client projects and demonstration projects created to showcase S&R Group's capabilities.
-
-Example projects can demonstrate functionality such as:
-
-* Responsive website design
-* Business websites
-* E-commerce applications
-* Shopping cart functionality
-* User accounts
-* Checkout flows
-* Order handling
-* Modern UI/UX
-* Full-stack web development
-
-These projects serve as examples of the types of websites and applications S&R Group can develop.
-
-## 🔒 Environment Variables
-
-If environment variables are required in the future, create a local `.env.local` file.
-
-Example:
-
-```env
-# Add project-specific environment variables here
-```
-
-Never commit secrets, API keys, passwords, or other sensitive credentials to the repository.
-
-## 🏗️ Production Build
-
-To verify that the project can be built for production:
-
-```bash
-npm run build
-```
-
-After a successful build, run:
-
-```bash
-npm run start
-```
-
-## 📌 Project Status
-
-**Status:** 🚧 In Development
-
-The S&R Group website is actively being developed. Design, content, portfolio projects, and functionality may continue to evolve as the business website grows.
-
-## 📄 License
-
-This project is currently private and intended for use by **S&R Group**.
-
-All rights reserved unless otherwise stated.
-
----
-
-**S&R Group**
-*Building modern websites for businesses.*
+This is proprietary software. The source code, design, text, logos and other assets in this repository may not be copied, modified, distributed or used without written permission from S&R Group. See [LICENSE](./LICENSE) for details.
